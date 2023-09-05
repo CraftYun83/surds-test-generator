@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+}
+
+.problem {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-style: solid;
+    min-height: 10vh;
+}
+
+img {
+    display:block
+}
+
+div button {
+    margin-left: 2%;
+}
+
+.katex { font-size: 2em; }
