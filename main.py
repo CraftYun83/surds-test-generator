@@ -1,8 +1,9 @@
 import random
 import sympy
-import matplotlib.pyplot as plt
-import string
+from sympy import Symbol
 import matplotlib as mpl
+mpl.rcParams['backend'] = "agg"
+import matplotlib.pyplot as plt
 
 class Problems:
     def random_exclude(self, exclude, range):
@@ -13,7 +14,7 @@ class Problems:
     def midpoint(self, p1, p2):
         return ((p1[0]+p2[0])/2, (p1[1]+p2[1])/2)
 
-    def generate_surd(self, intercept, exclude=[], base=None, range=(2, 6), simplify=True):
+    def generate_surd(self, intercept, exclude=[], base=None, range=(2, 6)):
         if base == None:
             base = random.choice([2, 3, 5])
         
@@ -70,6 +71,8 @@ class Problems:
     
     def easySimplify(self):
 
+        # Solve for the most simplified surd
+
         pid = random.randint(1000, 9999)
 
         a = self.generate_surd(0, range=(2, 9))
@@ -101,6 +104,9 @@ class Problems:
             "answer": sympy.latex(answer.simplify())
         }
     def rationaliseDenominator(self):
+
+        # Rationalise the denominator for 
+
         pid = random.randint(1000, 9999)
 
         a = self.generate_surd(random.randint(1, 5), range=(1, 2))
@@ -114,3 +120,32 @@ class Problems:
             "problem": "\\text{Rationalise the denominator for }"+sympy.latex(answer),
             "answer": sympy.latex(answer.simplify())
         }
+    
+    def expressAbAb(self):
+
+        # Express (a+b)/(a-b)
+
+        pid = random.randint(1000, 9999)
+
+        baseSurd = self.generate_surd(random.randint(1, 5), range=(1, 3))
+        
+        with sympy.evaluate(False):
+            radical = sympy.sqrt(baseSurd["base"]*baseSurd["mult"]**2)
+            intercept = baseSurd["intercept"]
+            final = (intercept-radical)/(intercept+radical)
+
+            a = Symbol("a")
+            b = Symbol("b")
+
+            form = a+b*sympy.sqrt(baseSurd["base"])
+
+        return {
+            "id": pid,
+            "type": "rationalisedenominator",
+            "problem": "\\text{Express }"+sympy.latex(final)+"\\text{ in the form }"+sympy.latex(form),
+            "answer": sympy.latex(final.simplify())
+        }
+
+problems = Problems()
+
+problems.expressAbAb()

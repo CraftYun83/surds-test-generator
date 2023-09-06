@@ -1,5 +1,6 @@
 from main import Problems
 import os
+import matplotlib
 from flask import Flask, render_template, send_from_directory, make_response
 
 problems = Problems()
@@ -30,7 +31,7 @@ def send_media(filename):
 @app.route("/deleteMedia/<path:filename>")
 def delete_media(filename):
     if ".png" in filename:
-        os.remove(os.path.dirname(os.path.abspath(__file__))+"\\media\\problems\\"+filename.split("/")[1])
+        os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "media", "problems", filename.split("/")[1]))
     return "true"
 
 @app.route('/createProblems', methods=["POST"])
@@ -39,7 +40,8 @@ def create_problems():
         "problems": [
             problems.easySimplify(),
             problems.missingHypotenuse(),
-            problems.rationaliseDenominator()
+            problems.rationaliseDenominator(),
+            problems.expressAbAb(),
         ]
     }
 
